@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Country fact Seeker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+<h1>Search that Country!</h1>
 <body>
-<h1>Voor Constantijn is Google niet zo Fijn!</h1>
-<div id="picture"><img alt="world-pic" src="assets/World_map_true_.jpg" height="508" width="800"/></div>
+<div ><img id="picture" alt="world-pic" src="assets/World_map_true_.jpg"/></div>
 <label for="input"><input name="country-search" type="text" id="input" placeholder="Country"/>
     <button id="button">Search</button>
 </label>
-
+<img alt="loading-gif" src="assets/globeturner.gif" height="197" width="203" id="loading" class="hide"/>
+<div class="lds-ripple"><div></div><div></div></div>
+<div id="error" class="hide"></div>
 <div id="content"></div>
-<div id="error"></div>
-
-<script src="./node_modules/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

@@ -21,16 +21,17 @@ async function searchcountry() {
     const oldFlag = document.getElementById('flag-image');
     const oldCountryNameH2 = document.getElementById('country-name-header');
     const oldTextContent = document.getElementById('information');
+    const worldLoader = document.getElementById('loading')
     if (oldCountryNameH2) {
         content.removeChild(oldCountryNameH2);
         content.removeChild(oldTextContent);
         content.removeChild(oldFlag);
     }
     try {
+        worldLoader.removeAttribute('class')
         const response = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`);
         const data = response.data[0];
         console.log(data);
-        console.log(`${data.name} is situated in ${data.subregion}. It has a population of ${data.population} people.`);
         const capitalAndMoney = () => {
             if (data.currencies.length === 1) {
                 return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s`;
@@ -45,21 +46,19 @@ async function searchcountry() {
                     console.log(sum);
                 }
             }
-            return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name},${sum} ${data.currencies[data.currencies.length - 2].name} and ${data.currencies[data.currencies.length - 1].name}.`;
+            return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}, ${sum} ${data.currencies[data.currencies.length - 2].name} and ${data.currencies[data.currencies.length - 1].name}.`;
         }
-        console.log(capitalAndMoney());
         function languages() {
             let sum = ``;
             if (data.languages.length === 1) {
-                return `They speak ${data.languages[0].name}`;
+                return `They speak ${data.languages[0].name}.`;
             }
             if (data.languages.length === 2) {
-                return `They speak ${data.languages[0].name} and ${data.languages[data.languages.length - 1].name}`;
+                return `They speak ${data.languages[0].name} and ${data.languages[data.languages.length - 1].name}.`;
             }
             if (data.languages.length > 2) {
                 for (let i = 1; i < data.languages.length - 2; i++) {
                     sum += data.languages[i].name + `, `;
-                    console.log(sum);
                 }
             }
             return `They speak ${data.languages[0].name},${sum} ${data.languages[data.languages.length - 2].name} and ${data.languages[data.languages.length - 1].name}.`;
@@ -76,9 +75,11 @@ async function searchcountry() {
         textContent.innerText = `${data.name} is situated in ${data.subregion}. It has a population of ${data.population} people.\n` + capitalAndMoney() + `\n` + languages();
         textContent.setAttribute('id', 'information');
         content.appendChild(textContent);
-        console.log(data);
-    } catch (e) {
+        console.log(`MORE COUNTRY DATA: ${data}`);
+    }
+    catch (e) {
         console.error(e);
+        errorMsg.removeAttribute('class')
         if (country.length === 0) {
             errorMsg.textContent = `Please enter a valid country-name`;
         }
@@ -86,6 +87,7 @@ async function searchcountry() {
             errorMsg.textContent = `Cannot find input:${country}, try again!`;
         }
     }
+    worldLoader.setAttribute('class', 'hide')
 }
 
 

@@ -1,33 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Ranchers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Truculenta:wght@600&display=swap');
+:root {
+    --box-shadow: 1px 1px 2px;
+}
 body {
-    background-color: blue;
+    background-color: lightblue;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-items: center;
 }
+h1 {
+    text-shadow: var(--box-shadow);
+    font-size: 50px;
+    font-family: "Ranchers", cursive;
+    opacity: 80%;
+}
+#picture {
+    opacity: 95%;
+    border: 1px lightblue;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    width: 600px;
+    height: auto;
+    box-shadow: var(--box-shadow);
+}
+
 button {
     margin: 5px;
     width: 200px;
+    height: 30px;
     font-weight: 500;
-    border: 1px solid gray;
-    border-radius: 2px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    font-family: 'Truculenta', sans-serif;
 }
-button:hover{
-    background-color: blue;
+button:hover {
+    background-color: darkcyan;
     color: white;
     transition-duration: 1s;
 }
+#error {
+    font-size: 50px;
+    border: dotted 2px;
+    border-radius: 3px;
+    background-color: aquamarine;
+    box-shadow: var(--box-shadow);
+    padding: 15px;
+    margin: 40px;
+    font-family: 'Truculenta', sans-serif;
+}
+#input {
+    box-shadow: var(--box-shadow);
+    font-family: 'Truculenta', sans-serif;
+    width: 250px;
+    height: 30px;
+}
 #content {
-    display: inline;
+    margin: 16px;
+    display: inline-grid;
+    justify-content: center;
+    row-gap: 16px;
+    column-gap: 16px;
+    max-width: 750px;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+    'flag name'
+    'info info';
 }
 #flag-image {
+    grid-area: flag;
     width: 200px;
     height: auto;
-}
-#information {
-    font-size: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: 3px;
 }
 #country-name-header {
-    font: 24px bold;
+    grid-area: name;
+    font-family: "Ranchers", cursive;
+    font-size: 50px;
+    align-self: center;
+    text-shadow: var(--box-shadow);
+
 }
-#hide{
+#information {
+    grid-area: info;
+    border: dotted 2px blue;
+    border-radius: 3px;
+    background-color: aquamarine;
+    font-size: 20px;
+    box-shadow: var(--box-shadow);
+    padding: 15px;
+    font-family: 'Truculenta', sans-serif;
+}
+.hide {
     display: none;
 }
