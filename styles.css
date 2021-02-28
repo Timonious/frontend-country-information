@@ -1,29 +1,66 @@
 @import url('https://fonts.googleapis.com/css2?family=Ranchers&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Truculenta:wght@600&display=swap');
+
 :root {
     --box-shadow: 1px 1px 2px;
+    --background-color: lightblue;
 }
+
 body {
-    background-color: lightblue;
+    background-color: var(--background-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
 }
+
 h1 {
     text-shadow: var(--box-shadow);
     font-size: 50px;
     font-family: "Ranchers", cursive;
     opacity: 80%;
 }
-#picture {
-    opacity: 95%;
-    border: 1px lightblue;
-    border-radius: 20px;
+
+.picture-container {
+    position: relative;
+    transition-duration: 1s;
     margin-bottom: 30px;
+}
+
+.picture {
+    opacity: 95%;
+    border: 1px var(--background-color);
+    border-radius: 20px;
+
     width: 600px;
     height: auto;
     box-shadow: var(--box-shadow);
+    transition-duration: 1s;
+}
+
+.picture-text {
+    font-family: 'Truculenta', sans-serif;
+    text-align: center;
+    font-size: 50px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--background-color);
+    color: grey;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s, visibility .2s;
+}
+
+.picture-container:hover .picture {
+    opacity: 15%;
+}
+
+.picture-container:hover .picture-text {
+    visibility: visible;
+    opacity: 1;
 }
 
 button {
@@ -36,11 +73,13 @@ button {
     box-shadow: var(--box-shadow);
     font-family: 'Truculenta', sans-serif;
 }
+
 button:hover {
     background-color: darkcyan;
     color: white;
     transition-duration: 1s;
 }
+
 #error {
     font-size: 50px;
     border: dotted 2px;
@@ -51,12 +90,14 @@ button:hover {
     margin: 40px;
     font-family: 'Truculenta', sans-serif;
 }
+
 #input {
     box-shadow: var(--box-shadow);
     font-family: 'Truculenta', sans-serif;
     width: 250px;
     height: 30px;
 }
+
 #content {
     margin: 16px;
     display: inline-grid;
@@ -70,6 +111,7 @@ button:hover {
     'flag name'
     'info info';
 }
+
 #flag-image {
     grid-area: flag;
     width: 200px;
@@ -77,15 +119,16 @@ button:hover {
     box-shadow: var(--box-shadow);
     border-radius: 3px;
 }
+
 #country-name-header {
     grid-area: name;
     font-family: "Ranchers", cursive;
     font-size: 50px;
     align-self: center;
     text-shadow: var(--box-shadow);
-
 }
-#information {
+
+.information {
     grid-area: info;
     border: dotted 2px blue;
     border-radius: 3px;
@@ -95,6 +138,97 @@ button:hover {
     padding: 15px;
     font-family: 'Truculenta', sans-serif;
 }
+
 .hide {
     display: none;
+}
+
+#country-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style: none;
+    border-radius: 3px;
+    background-color: aquamarine;
+    font-size: 20px;
+    box-shadow: var(--box-shadow);
+    padding: 15px;
+    font-family: 'Truculenta', sans-serif;
+}
+
+.list-item {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+    'flag-icon country-name-small'
+    'populous populous';
+    height: auto;
+    border: dotted 2px blue;
+    border-radius: 3px;
+    padding: 4px;
+    margin: 4px;
+}
+
+.flag-icon {
+    width: 50px;
+    height: auto;
+    grid-area: flag-icon;
+}
+
+.hidden-pop {
+    grid-area: populous;
+    font-size: 13px;
+    opacity: 0;
+}
+
+.shown-pop {
+    grid-area: populous;
+    font-size: 13px;
+    opacity: 1;
+}
+
+.north-america {
+    color: hsl(119, 27%, 40%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.south-america {
+    color: hsl(139, 43%, 59%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.asia {
+    color: hsl(354, 59%, 56%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.oceania {
+    color: hsl(288, 43%, 53%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.africa {
+    color: hsl(222, 47%, 55%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.europe {
+    color: hsl(47, 100%, 60%);
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+
+.antartica {
+    color: white;
+    grid-area: country-name-small;
+    cursor: pointer;
+}
+.no-continent {
+    grid-area: country-name-small;
+    cursor: pointer;
 }

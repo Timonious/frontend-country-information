@@ -1,53 +1,53 @@
 const button = document.getElementById("button");
 button.addEventListener("click", function () {
     country = inputField.value;
-    searchcountry();
+    searchCountry();
 });
 const inputField = document.getElementById("input");
 const input = (e) => {
     country = e.target.value;
     if (e.key === 'Enter') {
-        searchcountry();
+        searchCountry();
     }
 }
 inputField.addEventListener('keyup', input);
 const content = document.getElementById('content');
 let country = "";
-
-async function searchcountry() {
-    inputField.value = '';
-    const errorMsg = document.getElementById('error');
+async function searchCountry() {
+    const oldFlag = document.getElementById('flag-image'),
+        oldCountryNameH2 = document.getElementById('country-name-header'),
+        oldTextContent = document.getElementsByClassName('information'),
+        worldLoader = document.getElementById('loading'),
+        errorMsg = document.getElementById('error');
     errorMsg.textContent = '';
-    const oldFlag = document.getElementById('flag-image');
-    const oldCountryNameH2 = document.getElementById('country-name-header');
-    const oldTextContent = document.getElementById('information');
-    const worldLoader = document.getElementById('loading')
+    inputField.value = '';
     if (oldCountryNameH2) {
         content.removeChild(oldCountryNameH2);
         content.removeChild(oldTextContent);
         content.removeChild(oldFlag);
     }
     try {
-        worldLoader.removeAttribute('class')
-        const response = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`);
-        const data = response.data[0];
+        errorMsg.setAttribute('class', 'hide');
+        worldLoader.removeAttribute('class');
+        const response = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`),
+            data = response.data[0];
         console.log(data);
         const capitalAndMoney = () => {
             if (data.currencies.length === 1) {
-                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s`;
+                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s.`;
             }
             if (data.currencies.length === 2) {
-                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s and ${data.currencies[1].name}'s`;
+                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s and ${data.currencies[1].name}'s.`;
             }
             let sum = ``;
             if (data.currencies.length > 2) {
                 for (let i = 1; i < data.currencies.length - 2; i++) {
                     sum += data.currencies[i].name + `, `;
-                    console.log(sum);
                 }
             }
             return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}, ${sum} ${data.currencies[data.currencies.length - 2].name} and ${data.currencies[data.currencies.length - 1].name}.`;
         }
+
         function languages() {
             let sum = ``;
             if (data.languages.length === 1) {
@@ -63,6 +63,7 @@ async function searchcountry() {
             }
             return `They speak ${data.languages[0].name},${sum} ${data.languages[data.languages.length - 2].name} and ${data.languages[data.languages.length - 1].name}.`;
         }
+
         const flag = document.createElement('img');
         flag.src = data.flag;
         flag.setAttribute('id', 'flag-image');
@@ -72,18 +73,15 @@ async function searchcountry() {
         countryNameH2.innerText = `${data.name}`;
         content.appendChild(countryNameH2);
         const textContent = document.createElement('div');
-        textContent.innerText = `${data.name} is situated in ${data.subregion}. It has a population of ${data.population} people.\n` + capitalAndMoney() + `\n` + languages();
-        textContent.setAttribute('id', 'information');
+        textContent.innerText = `${data.name} is situated in ${data.subregion}. It has a population of ${numeral(data.population).format('0,0')} people.\n` + capitalAndMoney() + `\n` + languages();
+        textContent.setAttribute('class', 'information');
         content.appendChild(textContent);
-        console.log(`MORE COUNTRY DATA: ${data}`);
-    }
-    catch (e) {
+    } catch (e) {
         console.error(e);
         errorMsg.removeAttribute('class')
         if (country.length === 0) {
             errorMsg.textContent = `Please enter a valid country-name`;
-        }
-        else {
+        } else {
             errorMsg.textContent = `Cannot find input:${country}, try again!`;
         }
     }
