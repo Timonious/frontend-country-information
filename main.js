@@ -15,14 +15,14 @@ const content = document.getElementById('content');
 let country = "";
 async function searchCountry() {
     const oldFlag = document.getElementById('flag-image'),
-        oldCountryNameH2 = document.getElementById('country-name-header'),
+        exCountryNameH2 = document.getElementById('country-name-header'),
         oldTextContent = document.getElementsByClassName('information'),
         worldLoader = document.getElementById('loading'),
         errorMsg = document.getElementById('error');
     errorMsg.textContent = '';
     inputField.value = '';
-    if (oldCountryNameH2) {
-        content.removeChild(oldCountryNameH2);
+    if (exCountryNameH2) {
+        content.removeChild(exCountryNameH2);
         content.removeChild(oldTextContent);
         content.removeChild(oldFlag);
     }
