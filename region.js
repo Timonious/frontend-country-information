@@ -3,8 +3,8 @@ async function searchAllTheCountries() {
     const data = response.data
 
     const sortByPopulation = data.sort((a, b) => a.population - b.population)
-    const nameAndFlag = () => {
-
+    const nameAndFlag = () =>
+    {
         const list = document.getElementById('country-list')
         for (let i = 0; i < data.length; i++) {
             const listItem = document.createElement('li')
@@ -16,14 +16,14 @@ async function searchAllTheCountries() {
             listItem.appendChild(flag);
             const countryName = document.createElement('div');
             const colorCoder = (i) => {
-                const region = data[i].region.toString()
-                if (data[i].subregion === "Central America") {
+                const region = data[i].region.toString(), subregion = data[i].subregion;
+                if (subregion === "Central America") {
                     return countryName.setAttribute('class', 'north-america')
                 }
-                if (data[i].subregion ==="Northern America") {
+                if (subregion === "Northern America") {
                     return countryName.setAttribute('class', 'north-america')
                 }
-                if (data[i].subregion === "South America") {
+                if (subregion === "South America") {
                     return countryName.setAttribute('class', 'south-america')
                 }
                 if (region === "Oceania") {
@@ -39,52 +39,47 @@ async function searchAllTheCountries() {
                     return countryName.setAttribute('class', 'asia')
                 }
                 if (region === "Polar") {
-                    return countryName.setAttribute('class', 'antartica')
-                }
-                else {
+                    return countryName.setAttribute('class', 'antarctic')
+                } else {
                     return countryName.setAttribute('class', 'no-continent')
                 }
             }
             colorCoder([i])
             countryName.innerText = `${data[i].name}`;
-            countryName.setAttribute('id', 'list'+[i])
+            countryName.setAttribute('id', 'list' + [i])
             listItem.appendChild(countryName)
-            const listId = document.getElementById('list'+[i])
+            const listId = document.getElementById('list' + [i])
             const hiddenPopulation = document.createElement('div')
             hiddenPopulation.setAttribute('class', 'hidden-pop')
-            hiddenPopulation.setAttribute('id', 'hide-pop'+[i])
+            hiddenPopulation.setAttribute('id', 'hide-pop' + [i])
             const population = `Population: ${numeral(data[i].population).format('0,0')}`
-            hiddenPopulation.innerText =population
+            hiddenPopulation.innerText = population
             listItem.appendChild(hiddenPopulation)
-            listId.addEventListener('click', function() {
-                const hiddenPop = document.getElementById('hide-pop'+[i])
+            listId.addEventListener('click', function () {
+                const hiddenPop = document.getElementById('hide-pop' + [i])
                 if (hiddenPop) {
                     listItem.removeChild(hiddenPop)
                     const shownPopulation = document.createElement('div')
                     shownPopulation.setAttribute('class', 'shown-pop')
-                    shownPopulation.setAttribute('id', 'show-pop'+[i])
-                    shownPopulation.innerText =population
+                    shownPopulation.setAttribute('id', 'show-pop' + [i])
+                    shownPopulation.innerText = population
                     return listItem.appendChild(shownPopulation)
 
                 }
-                const shownPopulation = document.getElementById('show-pop'+[i])
+                const shownPopulation = document.getElementById('show-pop' + [i])
                 if (shownPopulation) {
                     listItem.removeChild(shownPopulation)
                     const hiddenPopulation = document.createElement('div')
                     hiddenPopulation.setAttribute('class', 'hidden-pop')
-                    hiddenPopulation.setAttribute('id', 'hide-pop'+[i])
-                    hiddenPopulation.innerText =population
+                    hiddenPopulation.setAttribute('id', 'hide-pop' + [i])
+                    hiddenPopulation.innerText = population
                     return listItem.appendChild(hiddenPopulation)
 
                 }
-
-
             });
         }
-
     }
     nameAndFlag()
-    console.log(data)
 }
 
 searchAllTheCountries()
