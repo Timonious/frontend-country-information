@@ -1,3 +1,4 @@
+// const axios = require("axios");
 const button = document.getElementById("button");
 button.addEventListener("click", function () {
     country = inputField.value;
@@ -29,51 +30,55 @@ async function searchCountry() {
     try {
         errorMsg.setAttribute('class', 'hide');
         worldLoader.removeAttribute('class');
-        const response = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`),
-            data = response.data[0];
-        console.log(data);
+        const response = await axios.get(`https://restcountries.eu/rest/v2/name/${country}?fullText=true`)
+        //     data =
+        const { currencies, capital, flag, subregion, languages, population, name} = response.data[0];
+        // console.log(data);
         const capitalAndMoney = () => {
-            if (data.currencies.length === 1) {
-                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s.`;
-            }
-            if (data.currencies.length === 2) {
-                return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}'s and ${data.currencies[1].name}'s.`;
-            }
             let sum = ``;
-            if (data.currencies.length > 2) {
-                for (let i = 1; i < data.currencies.length - 2; i++) {
-                    sum += data.currencies[i].name + `, `;
+            switch (true) {
+                case currencies.length === 1:
+                    return `The capital is ${capital} and you can pay with ${currencies[0].name}'s.`;
+                case currencies.length === 2:
+                    return `The capital is ${capital} and you can pay with ${currencies[0].name}'s and ${currencies[1].name}'s.`;
+                case currencies.length > 2:
+                    for (let i = 1; i < currencies.length - 2; i++) {
+                        sum += currencies[i].name + `, `;
+                    }
+                    return `The capital is ${capital} and you can pay with ${currencies[0].name}, ${sum} ${currencies[currencies.length - 2].name} and ${currencies[currencies.length - 1].name}.`;
+                default :
+                    return `I can't seem to retrieve the capital nor the currencies`
+            }
+        }
+        function spokenLanguages() {
+            let sum = ``;
+            if (languages.length === 1) {
+                return `They speak ${languages[0].name}.`;
+            }
+            if (languages.length === 2) {
+                return `They speak ${languages[0].name} and ${languages[languages.length - 1].name}.`;
+            }
+            if (languages.length > 2) {
+                for (let i = 1; i < languages.length - 2; i++) {
+                    sum += languages[i].name + `, `;
                 }
             }
-            return `The capital is ${data.capital} and you can pay with ${data.currencies[0].name}, ${sum} ${data.currencies[data.currencies.length - 2].name} and ${data.currencies[data.currencies.length - 1].name}.`;
+            return `They speak ${languages[0].name},${sum} ${languages[languages.length - 2].name} and ${languages[languages.length - 1].name}.`;
         }
 
-        function languages() {
-            let sum = ``;
-            if (data.languages.length === 1) {
-                return `They speak ${data.languages[0].name}.`;
-            }
-            if (data.languages.length === 2) {
-                return `They speak ${data.languages[0].name} and ${data.languages[data.languages.length - 1].name}.`;
-            }
-            if (data.languages.length > 2) {
-                for (let i = 1; i < data.languages.length - 2; i++) {
-                    sum += data.languages[i].name + `, `;
-                }
-            }
-            return `They speak ${data.languages[0].name},${sum} ${data.languages[data.languages.length - 2].name} and ${data.languages[data.languages.length - 1].name}.`;
-        }
-
-        const flag = document.createElement('img');
-        flag.src = data.flag;
-        flag.setAttribute('id', 'flag-image');
-        content.appendChild(flag);
+        const flagImg = document.createElement('img');
+        flagImg.src = flag;
+        flagImg.setAttribute('id', 'flag-image');
+        content.appendChild(flagImg);
         const countryNameH2 = document.createElement('div');
         countryNameH2.setAttribute('id', 'country-name-header');
-        countryNameH2.innerText = `${data.name}`;
+        countryNameH2.innerText = `${name}`;
         content.appendChild(countryNameH2);
         const textContent = document.createElement('div');
-        textContent.innerText = `${data.name} is situated in ${data.subregion}. It has a population of ${numeral(data.population).format('0,0')} people.\n` + capitalAndMoney() + `\n` + languages();
+        textContent.innerText =
+            `${name} is situated in ${subregion}. It has a population of ${numeral(population).format('0,0')} people.
+             ${capitalAndMoney()}
+             ${spokenLanguages()}`;
         textContent.setAttribute('class', 'information');
         content.appendChild(textContent);
     } catch (e) {

@@ -1,7 +1,6 @@
 async function searchAllTheCountries() {
     const response = await axios.get('https://restcountries.eu/rest/v2/all')
     const data = response.data
-
     const sortByPopulation = data.sort((a, b) => a.population - b.population)
     const nameAndFlag = () => {
         const list = document.getElementById('country-list')
