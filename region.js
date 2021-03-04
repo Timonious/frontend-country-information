@@ -3,8 +3,7 @@ async function searchAllTheCountries() {
     const data = response.data
 
     const sortByPopulation = data.sort((a, b) => a.population - b.population)
-    const nameAndFlag = () =>
-    {
+    const nameAndFlag = () => {
         const list = document.getElementById('country-list')
         for (let i = 0; i < data.length; i++) {
             const listItem = document.createElement('li')
@@ -17,31 +16,25 @@ async function searchAllTheCountries() {
             const countryName = document.createElement('div');
             const colorCoder = (i) => {
                 const region = data[i].region.toString(), subregion = data[i].subregion;
-                if (subregion === "Central America") {
-                    return countryName.setAttribute('class', 'north-america')
-                }
-                if (subregion === "Northern America") {
-                    return countryName.setAttribute('class', 'north-america')
-                }
-                if (subregion === "South America") {
-                    return countryName.setAttribute('class', 'south-america')
-                }
-                if (region === "Oceania") {
-                    return countryName.setAttribute('class', 'oceania')
-                }
-                if (region === "Africa") {
-                    return countryName.setAttribute('class', 'africa')
-                }
-                if (region === "Europe") {
-                    return countryName.setAttribute('class', 'europe')
-                }
-                if (region === "Asia") {
-                    return countryName.setAttribute('class', 'asia')
-                }
-                if (region === "Polar") {
-                    return countryName.setAttribute('class', 'antarctic')
-                } else {
-                    return countryName.setAttribute('class', 'no-continent')
+                switch (true) {
+                    case subregion === "Central America":
+                        return countryName.setAttribute('class', 'north-america')
+                    case subregion === "Northern America":
+                        return countryName.setAttribute('class', 'north-america')
+                    case subregion === "South America":
+                        return countryName.setAttribute('class', 'south-america')
+                    case region === "Oceania":
+                        return countryName.setAttribute('class', 'oceania')
+                    case region === "Africa":
+                        return countryName.setAttribute('class', 'africa')
+                    case region === "Europe":
+                        return countryName.setAttribute('class', 'europe')
+                    case region === "Asia":
+                        return countryName.setAttribute('class', 'asia')
+                    case region === "Polar":
+                        return countryName.setAttribute('class', 'antarctic')
+                    default:
+                        return countryName.setAttribute('class', 'no-continent')
                 }
             }
             colorCoder([i])
