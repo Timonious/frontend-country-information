@@ -141,6 +141,7 @@ button:hover {
 
 .hide {
     display: none;
+    opacity: 0;
 }
 
 #country-list {
